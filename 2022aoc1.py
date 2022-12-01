@@ -1,22 +1,23 @@
 def aoc1():
     print("Hello World")
-    maxcals = [0,0,0]
-    with open('input1.txt') as openfileobject:
+    with open('input1.txt', 'r') as file:
         total = 0
-        for line in openfileobject:
+        listofelves = []
+        for line in file:
             if line in ['\n', '\r\n']:
+                listofelves.append(total)
                 total = 0
             else:
                 total = total + int(line)
-            if total > maxcals[2] and total < maxcals[1]:
-                maxcals[2] = total
-            if total > maxcals[1] and total < maxcals[0]:
-                maxcals[2] = maxcals[1]
-                maxcals[1] = total
-            if total > maxcals[0]:
-                maxcals[2] = maxcals[1]
-                maxcals[1] = maxcals[0]
-                maxcals[0] = total
-        print(maxcals[0] + maxcals[1] + maxcals[2])
+        listofelves.sort()
+        print(listofelves[-1])
+        print(listofelves[-1]+listofelves[-2]+listofelves[-3])
+
+def nicesoln():
+    with open("input1.txt", "r") as file:  
+        data = sorted(sum(int(y) for y in x.splitlines()) for x in file.read().split("\n\n"))
+        print(data[-1])
+        print(sum(data[-3:]))
+
 
 aoc1()
