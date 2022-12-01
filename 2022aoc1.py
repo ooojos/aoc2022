@@ -19,5 +19,10 @@ def nicesoln():
         print(data[-1])
         print(sum(data[-3:]))
 
+def anothernicesoln():
+    elves = open("input1.txt").read().split("\n\n")
+    calories = [sum(map(int, elf.split())) for elf in elves]
+    print(max(calories), sum(sorted(calories)[-3:]))
+
 
 aoc1()
