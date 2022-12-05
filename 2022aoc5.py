@@ -58,3 +58,20 @@ def aoc52():
                 pass
 aoc51()
 aoc52()
+
+
+carg, ins = [s.split('\n') for s in open("in5.txt").read().split("\n\n")]
+cargo = [[c for c in x if c!=' '][::-1] for x in map(list,zip(*[*carg])) if x[-1]!=' ']
+instructions = [[int(x) for x in s if x.isdigit()] for s in ins]
+
+def part1(cargo, instructions):
+    for moves, a, b in instructions: 
+        for _ in range(moves):
+            cargo[b-1].append(cargo[a-1].pop())
+    return ''.join(map(lambda x: x[-1], cargo))
+
+def part2(cargo, instructions):
+    for moves, a, b in instructions:
+        cargo[b-1].extend(cargo[a-1][-moves:])
+        del cargo[a-1][-moves:]
+    return ''.join(map(lambda x: x[-1], cargo))
