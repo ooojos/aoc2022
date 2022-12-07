@@ -2,7 +2,6 @@ def aoc7():
     with open("in7.txt") as f:
         dirs = [["/", 0]]
         cwd = "/"
-        last = ""
         for line in f:
             if line[0:3] == "dir":
                 dirs.append([cwd+line[4:].strip(), 0])
@@ -37,3 +36,24 @@ def aoc7():
         print(total)
         print(dirs[target][1])
 aoc7()
+
+from collections import defaultdict
+from itertools import accumulate
+
+def goodsoln():
+    dirs = defaultdict(int)
+
+    for line in open('in7.txt'):
+        match line.split():
+            case '$', 'cd', '/': curr = ['']
+            case '$', 'cd', '..': curr.pop()
+            case '$', 'cd', x: curr.append(x+'/')
+            case '$', 'ls': pass
+            case 'dir', _: pass
+            case size, _:
+                for p in accumulate(curr):
+                    dirs[p] += int(size)
+
+    print(sum(s for s in dirs.values() if s <= 100_000))
+    print(min(s for s in dirs.values() if s >= dirs[''] - 40_000_000))
+goodsoln()
